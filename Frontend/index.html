@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <label>Numero 1:</label>
+        <input type="number" id="number1" />
+    </div>
+    <div>
+        <label>Numero 2:</label>
+        <input type="number" id="number2" />
+    </div>  
+    <div>
+        <button id="btnSend" onclick="btnSend_onClick()">Calcular</button>
+    </div>
+    <div id="message">
+
+    </div>
+    <script>
+        async function btnSend_onClick() {
+            const numero1 = number1.value;
+            const numero2 = number2.value;
+            const resultado = await sumaService(numero1, numero2);
+            message.innerText = resultado;
+        }
+
+        async function sumaService(paramNumero1, paramNumero2) {
+            const opciones = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    numero1: paramNumero1,
+                    numero2: paramNumero2
+                })
+            };
+
+            const response = await fetch("https://localhost:7158/Operations/Suma", opciones);
+            
+            const info = await response.json();
+
+            return info.data;
+        }
+    </script>
+</body>
+</html>
